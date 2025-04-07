@@ -3,6 +3,10 @@
 This is a small project I made to illustrate how responsive container can meet
 animations without facing the `transform` limitations made by the container.  
 
+## Showcase
+
+https://github.com/user-attachments/assets/5b7b087a-9a25-440a-ad3a-9a105fff2c17
+
 ## The Logic
 
 This goal is achieved via duplication. There'a `HBoxContainer` called `Responsive`
