@@ -23,7 +23,7 @@ func check_for_changes():
 	
 	# check for addition and re-position
 	for res_child in responsive_children:
-		if res_child not in mapped.keys():
+		if res_child in mapped.keys():
 			# is not a new node
 			var mapped_actual_child = mapped[res_child]
 			if res_child.global_position != mapped_actual_child.global_position:
