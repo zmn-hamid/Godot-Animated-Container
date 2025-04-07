@@ -18,3 +18,7 @@ Note2: The only property that is tracked and animated is `position`.
 
 This way you can easily do any animation you want with the actual nodes, without 
 facing the limitations set by `Container`s.
+
+## Attribution
+
+Based on / inspired by `corgi120`'s [post](https://www.reddit.com/r/godot/comments/x00qc4/turn_order_ui_trick_to_animate_children_inside/) on Reddit.
