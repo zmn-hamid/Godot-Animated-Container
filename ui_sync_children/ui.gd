@@ -5,13 +5,27 @@ extends Control
 
 var mapped: Dictionary = {} # {responsive_child: actual_child}
 
+var init: bool = false
+
+func _ready() -> void:
+	responsive.child_order_changed.connect(_on_child_order_changed)
+
 func _process(_delta: float) -> void:
-	check_for_changes()
+	if not init:
+		# to avoid overhead, only initialize.
+		# the rest is handled via child_order_changed signal
+		syncronize_actual()
+		init = true
 
-func check_for_changes():
-	var tween = create_tween().set_ease(Tween.EASE_IN_OUT) \
-				.set_trans(Tween.TRANS_CUBIC).set_parallel()
+func _on_child_order_changed() -> void:
+	"""checks if child order is changed to update the actual nodes"""
+	if init:
+		if get_tree():
+			await get_tree().process_frame
+		syncronize_actual()
 
+func syncronize_actual():
+	"""updates $Actual children to sync with $Responsive"""
 	var responsive_children = responsive.get_children()
 	
 	# check for removal
@@ -28,11 +42,12 @@ func check_for_changes():
 			var mapped_actual_child = mapped[res_child]
 			if res_child.global_position != mapped_actual_child.global_position:
 				# needs re-position
+				var tween = create_tween().set_parallel()
 				tween.tween_property(
 					mapped_actual_child,
 					"global_position",
 					res_child.global_position,
-					.1,
+					.2,
 				)
 		else:
 			# is a new node
@@ -42,7 +57,7 @@ func check_for_changes():
 			dup.global_position = res_child.global_position
 
 
-### tracked buttons
+### buttons
 
 func _on_change_order_button_pressed() -> void:
 	responsive.move_child(responsive.get_child(-1), 0)
