@@ -42,22 +42,30 @@ func synchronize_actual():
 			var mapped_actual_child = mapped[res_child]
 			if res_child.global_position != mapped_actual_child.global_position:
 				# needs re-position
-				var tween = create_tween().set_parallel()
-				tween.tween_property(
-					mapped_actual_child,
-					"global_position",
-					res_child.global_position,
-					.2,
-				)
+				sync_core(res_child, mapped_actual_child, true)
 				actual.move_child(mapped_actual_child, responsive_children.find(res_child))
 		else:
 			# is a new node
 			var dup = res_child.duplicate()
 			actual.add_child(dup)
-			actual.move_child(dup, responsive_children.find(res_child))
 			mapped[res_child] = dup
-			dup.global_position = res_child.global_position
+			sync_core(res_child, dup, true)
+			actual.move_child(dup, responsive_children.find(res_child))
 
+func sync_core(original_node: Node, target_node: Node, animate: bool = false, from = null) -> void:
+	"""
+		the function responsible for syncing target (actual) and original (responsive)
+	"""
+	if animate:
+		var tween = create_tween().set_parallel()
+		tween.tween_property(
+			target_node,
+			"global_position",
+			original_node.global_position,
+			.2,
+		).from(from if from else target_node.global_position)
+	else:
+		target_node.global_position = original_node.global_position
 
 ### buttons
 
