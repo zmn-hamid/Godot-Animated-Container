@@ -36,5 +36,5 @@ When the children are sorted, the built-in _notification function handles the an
 
 ## Attribution
 
-ui_sync_children -> corgi120's [post](https://www.reddit.com/r/godot/comments/x00qc4/turn_order_ui_trick_to_animate_children_inside/) on Reddit
+ui_sync_children -> corgi120's [post](https://www.reddit.com/r/godot/comments/x00qc4/turn_order_ui_trick_to_animate_children_inside/) on Reddit  
 ui_notif_handler -> ArchieVillain's [issue](https://github.com/godotengine/godot-proposals/issues/9616)
