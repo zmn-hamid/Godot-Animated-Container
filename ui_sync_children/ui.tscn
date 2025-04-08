@@ -32,21 +32,21 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Responsive"]
+[node name="a" type="TextureRect" parent="Responsive"]
 modulate = Color(1, 0.7, 0.7, 1)
 layout_mode = 2
 texture = ExtResource("2_m6e0p")
 
-[node name="TextureRect2" type="TextureRect" parent="Responsive"]
+[node name="b" type="TextureRect" parent="Responsive"]
 layout_mode = 2
 texture = ExtResource("2_m6e0p")
 
-[node name="TextureRect3" type="TextureRect" parent="Responsive"]
+[node name="c" type="TextureRect" parent="Responsive"]
 modulate = Color(1, 0.49, 0.49, 1)
 layout_mode = 2
 texture = ExtResource("2_m6e0p")
 
-[node name="TextureRect4" type="TextureRect" parent="Responsive"]
+[node name="d" type="TextureRect" parent="Responsive"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 texture = ExtResource("2_m6e0p")

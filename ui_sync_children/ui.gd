@@ -49,10 +49,12 @@ func synchronize_actual():
 					res_child.global_position,
 					.2,
 				)
+				actual.move_child(mapped_actual_child, responsive_children.find(res_child))
 		else:
 			# is a new node
 			var dup = res_child.duplicate()
 			actual.add_child(dup)
+			actual.move_child(dup, responsive_children.find(res_child))
 			mapped[res_child] = dup
 			dup.global_position = res_child.global_position
 
@@ -66,5 +68,6 @@ func _on_remove_button_pressed() -> void:
 	responsive.remove_child(responsive.get_child(0))
 
 func _on_add_button_pressed() -> void:
-	var c = responsive.get_child(0).duplicate()
-	responsive.add_child(c)
+	var child = responsive.get_child(-1).duplicate()
+	responsive.add_child(child)
+	responsive.move_child(child, 0)
