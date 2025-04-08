@@ -9,11 +9,11 @@ Two methods were used:
     - No full animation acess: when the container changes (e.g. a new node is added or container is resized)
     everything is reset
     - Can't turn off the animation for a while
-2. Via duplication and syncronization -> ui_sync_children:
+2. Via duplication and synchronization -> ui_sync_children:
     - Is more complex
     - Full access to animations: The only thing that will reset are the properties
-    you define. In this project the global_position is syncronized.
-    - Can add more logic and turn off / on the syncronization
+    you define. In this project the global_position is synchronized.
+    - Can add more logic and turn off / on the synchronization
 
 ## Showcase (for both methods)
 
@@ -25,7 +25,7 @@ This goal is achieved via duplication. There'a `HBoxContainer` called `Responsiv
 which holds all the `TextureRect`s as usual, and then there's an empty `Control` node
 called `Actual` which will be synced to the `Responsive` node's children and animated.
 
-You can check the code at [ui.gd](ui.gd) in `syncronize_actual` function. 
+You can check the code at [ui.gd](ui.gd) in `synchronize_actual` function. 
 
 Note1: `Responsive` node's `modulate:a` is set to `0.0` so only the actual nodes are shown.  
 Note2: The only property that is tracked and animated is `position`.
