@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 	if not init:
 		# to avoid overhead, only initialize.
 		# the rest is handled via child_order_changed signal
-		syncronize_actual()
+		synchronize_actual()
 		init = true
 
 func _on_child_order_changed() -> void:
@@ -22,9 +22,9 @@ func _on_child_order_changed() -> void:
 	if init:
 		if get_tree():
 			await get_tree().process_frame
-		syncronize_actual()
+		synchronize_actual()
 
-func syncronize_actual():
+func synchronize_actual():
 	"""updates $Actual children to sync with $Responsive"""
 	var responsive_children = responsive.get_children()
 	
