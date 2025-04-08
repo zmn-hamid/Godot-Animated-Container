@@ -32,9 +32,9 @@ You can check the code at [ui.gd](ui_sync_children/ui.gd) in `synchronize_actual
 Note1: `Responsive` node's `modulate:a` is set to `0.0` so only the actual nodes are shown.  
 Note2: The only property that is tracked and animated is `position`.
 
-## The Logic for ui notification handler
+## The Logic for UI notification handler
 
-When the children are sorted, the built-in _notification function handles the animatins
+When the children are sorted, the built-in `_notification` function handles the animatins
 
 ## Attribution
 
