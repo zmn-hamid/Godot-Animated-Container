@@ -15,9 +15,11 @@ Two methods were used:
     you define. In this project the global_position is synchronized.
     - Can add more logic and turn off / on the synchronization
 
-## Showcase (for both methods)
+## Showcase (for method 2)
 
-https://github.com/user-attachments/assets/5b7b087a-9a25-440a-ad3a-9a105fff2c17
+https://github.com/user-attachments/assets/31148fc2-b159-4cad-a0b7-9054aa128e12
+
+For the first method, there are less animations but still pretty good
 
 ## The Logic for ui sync children
 
