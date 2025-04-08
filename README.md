@@ -6,7 +6,7 @@ Two methods were used:
 1. Via `_notification` function -> ui_notif_handler:
     - A more Godot-ish way of handling this
     - Simpler logic
-    - No full animation acess: when the container changes (e.g. a new node is added or container is resized)
+    - No full animation access: when the container changes (e.g. a new node is added or container is resized)
     everything is reset
     - Can't turn off the animation for a while
 2. Via duplication and synchronization -> ui_sync_children:
@@ -25,7 +25,7 @@ This goal is achieved via duplication. There'a `HBoxContainer` called `Responsiv
 which holds all the `TextureRect`s as usual, and then there's an empty `Control` node
 called `Actual` which will be synced to the `Responsive` node's children and animated.
 
-You can check the code at [ui.gd](ui.gd) in `synchronize_actual` function. 
+You can check the code at [ui.gd](ui_sync_children/ui.gd) in `synchronize_actual` function. 
 
 Note1: `Responsive` node's `modulate:a` is set to `0.0` so only the actual nodes are shown.  
 Note2: The only property that is tracked and animated is `position`.
