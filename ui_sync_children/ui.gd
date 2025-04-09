@@ -31,7 +31,8 @@ func _on_child_order_changed() -> void:
 
 func start_sync() -> void:
 	"""updates $Actual children to sync with $Responsive"""
-	if tween and tween.is_running():
+	# DO NOT use `if` or it will break when doing fast clicks on change_order button
+	while tween and tween.is_running():
 		await tween.finished
 	var responsive_children = responsive.get_children()
 	
