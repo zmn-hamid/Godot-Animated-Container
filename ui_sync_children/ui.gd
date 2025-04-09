@@ -44,20 +44,17 @@ func start_sync() -> void:
 	
 	# check for changes to the existing children
 	for res_child in responsive_children:
-		if res_child in mapped:
-			# is not a new child / sync with the changes
-			if res_child.global_position != tracked[res_child]["global_position"]:
-				sync_core(res_child, responsive_children.find(res_child))
-		else:
-			# is a new child / sync with the changes
+		if res_child not in mapped:
+			# is a new child
 			var act_child = res_child.duplicate()
 			actual.add_child(act_child)
 			mapped[res_child] = act_child
-			sync_core(res_child, responsive_children.find(res_child))
+		sync_core(res_child, responsive_children.find(res_child))
 
 func sync_core(res_child, res_child_idx: int) -> void:
 	"""core function that syncs and tracks"""
 	if res_child not in tracked.keys():
+		# is a new child
 		# default global_position is zero
 		tracked[res_child] = {"global_position": Vector2.ZERO}
 	# get the equivalent actual child
