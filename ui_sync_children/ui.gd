@@ -58,14 +58,21 @@ func start_sync() -> void:
 func sync_core(res_child, res_child_idx: int) -> void:
 	"""core function that syncs and tracks"""
 	if res_child not in tracked.keys():
+		# default global_position is zero
 		tracked[res_child] = {"global_position": Vector2.ZERO}
+	# get the equivalent actual child
 	var act_child = mapped[res_child]
-	var diff = res_child.global_position - tracked[res_child]["global_position"]
-	animate_child(act_child, null, act_child.global_position + diff)
+	# calculate the changes made to the responsive child
+	var difference = res_child.global_position - tracked[res_child]["global_position"]
+	# add the changes to the actual child
+	tween_child(act_child, null, act_child.global_position + difference)
+	# update the tracked properties to match the responsive child
 	tracked[res_child]["global_position"] = res_child.global_position
+	# move the actual child to the correct index to match the order of responsive children
+	# this doesn't do anything with the visuals but will keep maintainability
 	actual.move_child(act_child, res_child_idx)
 
-func animate_child(act_child, from, to) -> void:
+func tween_child(act_child, from, to) -> void:
 	"""animates the $Actual child"""
 	tween = create_tween().set_parallel()
 	tween.tween_property(
