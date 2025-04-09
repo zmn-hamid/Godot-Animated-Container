@@ -20,16 +20,16 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if not is_initialized:
-		synchronize_actual()
+		start_sync()
 		is_initialized = true
 
 func _on_child_order_changed() -> void:
 	"""checks if child order is changed to update the actual nodes"""
 	if is_initialized and is_inside_tree():
 		await get_tree().process_frame
-		synchronize_actual()
+		start_sync()
 
-func synchronize_actual() -> void:
+func start_sync() -> void:
 	"""updates $Actual children to sync with $Responsive"""
 	if tween and tween.is_running():
 		await tween.finished
