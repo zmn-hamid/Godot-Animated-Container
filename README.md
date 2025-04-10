@@ -29,34 +29,56 @@ called `Actual` which will be synced to the `Responsive` node's children and ani
 
 The syncronization is not absolute, which means, only the changes made to the responsive
 children is forced on the actual children. This way any transformation to the actual
-children is persisted.
+children is persisted and only changes are reflected.
 
-#### how tho?
+#### How tho?
 
 There's a variable called `mapped` which acts like a pointer system. It maps the children of
 `responsive` to the children of `actual`.  
 There's also another variable called `tracked` which tracks the last properties of the the
 responsive children.  
-The `start_sync` function checks for the changes made to the responsive children, and forces
-those changes upon the equivalent actual children. This way no matter what transformation you did to the
+The `start_sync` function checks for the changes made to the responsive children, and reflects
+those changes on the equivalent actual children. This way no matter what transformation you did to the
 actual children, the responsive children will not reset them, but will affect them accordingly.  
 Note: `Responsive` node's `modulate:a` is set to `0.0` so only the actual nodes are shown.  
 
-#### what properties are synced?
+#### What properties are synced?
 
 To keep the project minimal, only the changes to `global_position` is tracked and synced.
 You can modify the `sync_core` function to add other properties such as `scale`.
 
-#### how optimized is it?
+#### How can i animate the actual children? (IMPORTANT)
+
+Everytime you want to manually animate the actual children, make sure the `tween` variable
+is not running by doing:
+
+    tween_finished()
+	tween = create_tween()
+
+You should do this because everytime the `child_order_changed` is emitted,
+the `tween` handles the defined properties (`global_position` in this project)
+and any attempt at animating the same properties at the same time would makes issues.
+you should await the `finished` signal and create a new tween to block other attempts.  
+
+If you want to do constant animations (e.g floating), either use shaders or create
+a new system that would pause the animation while `tween` is running and play after
+it's finished. you can await the tween in the animation loop as well, using the block of
+code shown above.
+
+#### How optimized is it?
 
 Syncing only happens once when the tree is made, and once per each change (addition/removal/reorder).
 Thank `child_order_changed` signal for that. You can check the code for further info on how
 optimized it is -> [ui.gd](ui_sync_children/ui.gd).
 
+<b>In case you want to track the changes to other properties, you have to either find the
+corresponding signals or simply run `start_sync` function in each process frame, which would
+be less optimized</b>
+
 ## The logic for method 2
 
 When the children are sorted, the built-in `_notification` tracks the previous
-states and animates the reordering.
+states and animates the sorting.
 
 ## Attribution
 
