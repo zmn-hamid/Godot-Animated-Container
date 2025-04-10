@@ -1,5 +1,7 @@
 extends Control
 
+@export var default_duration: float = 0.2
+
 @onready var responsive: HBoxContainer = $Responsive
 @onready var actual: Control = $Actual
 
@@ -31,9 +33,10 @@ func _on_child_order_changed() -> void:
 
 func start_sync() -> void:
 	"""updates $Actual children to sync with $Responsive"""
-	# DO NOT use `if` or it will break when doing fast clicks on change_order button
-	while tween and tween.is_running():
-		await tween.finished
+	await tween_finished()
+	# create a tween right away to avoid restarting
+	tween = create_tween().set_parallel() # you can unparallel this
+	
 	var responsive_children = responsive.get_children()
 	
 	# check for removal of children
@@ -53,7 +56,7 @@ func start_sync() -> void:
 		sync_core(res_child, responsive_children.find(res_child))
 
 func sync_core(res_child, res_child_idx: int) -> void:
-	"""core function that syncs and tracks"""
+	"""core function that syncs, animates and tracks"""
 	if res_child not in tracked.keys():
 		# is a new child
 		# default global_position is zero
@@ -63,22 +66,19 @@ func sync_core(res_child, res_child_idx: int) -> void:
 	# calculate the changes made to the responsive child
 	var difference = res_child.global_position - tracked[res_child]["global_position"]
 	# add the changes to the actual child
-	tween_child(act_child, null, act_child.global_position + difference)
+	tween.tween_property(act_child, "global_position",
+						 act_child.global_position + difference,
+						 default_duration)
 	# update the tracked properties to match the responsive child
 	tracked[res_child]["global_position"] = res_child.global_position
 	# move the actual child to the correct index to match the order of responsive children
 	# this doesn't do anything with the visuals but will keep maintainability
 	actual.move_child(act_child, res_child_idx)
 
-func tween_child(act_child, from, to) -> void:
-	"""animates the $Actual child"""
-	tween = create_tween().set_parallel()
-	tween.tween_property(
-		act_child,
-		"global_position",
-		to,
-		.2,
-	).from(from if from else act_child.global_position)
+func tween_finished() -> void:
+	"""waits for all tweens to finish - always await this function"""
+	while tween and tween.is_running():
+		await tween.finished
 
 ### buttons
 
@@ -94,4 +94,9 @@ func _on_add_button_pressed() -> void:
 	responsive.move_child(child, 0)
 
 func _on_change_position_pressed() -> void:
-	actual.get_child(-1).global_position.y -= 100
+	await tween_finished()
+	tween = create_tween() # you can set parallel if you want
+	var child_last = actual.get_child(-1)
+	tween.tween_property(child_last, "global_position:y",
+						 child_last.global_position.y + 50,
+						 default_duration)
