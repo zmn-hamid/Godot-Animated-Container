@@ -19,7 +19,7 @@ Two methods were used:
 
 ## Showcase (for method 1)
 
-
+https://github.com/user-attachments/assets/31148fc2-b159-4cad-a0b7-9054aa128e12
 
 ## The logic for method 1
 
