@@ -52,8 +52,8 @@ You can modify the `sync_core` function to add other properties such as `scale`.
 Everytime you want to manually animate the actual children, make sure the `tween` variable
 is not running by doing:
 
-    tween_finished()
-	tween = create_tween()
+    await tween_finished()
+    tween = create_tween()
 
 You should do this because everytime the `child_order_changed` is emitted,
 the `tween` handles the defined properties (`global_position` in this project)
