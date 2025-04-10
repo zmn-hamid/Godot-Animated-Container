@@ -47,7 +47,7 @@ Note: `Responsive` node's `modulate:a` is set to `0.0` so only the actual nodes 
 To keep the project minimal, only the changes to `global_position` is tracked and synced.
 You can modify the `sync_core` function to add other properties such as `scale`.
 
-#### How can i animate the actual children? (IMPORTANT)
+### How can i animate the actual children? (IMPORTANT)
 
 Everytime you want to manually animate the actual children, make sure the `tween` variable
 is not running by doing:
